@@ -10,6 +10,16 @@
   border: 1px solid #FFF;
 }
 
+.profile__edit-button:active {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.profile__edit-button:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
 @media screen and (min-width: 768px) {
   .profile__edit-button {
     min-width: 24px;
