@@ -6,7 +6,7 @@
   background-repeat: no-repeat;
   background-position: center;
   margin-bottom: 31.6px;
-  padding-left: 27px;
+  margin-left: 27px;
 }
 
 @media screen and (min-width: 768px) {
@@ -19,6 +19,6 @@
 
 @media screen and (min-width: 920px) {
   .header__logo {
-    padding: 0;
+    margin-left: 0;
   }
 }

@@ -1,0 +1,35 @@
+.popup__close {
+  color: #FFF;
+  min-width: 26px;
+  height: 26px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  background-image: url(../../../images/popup-close.svg);
+  background-size: 26px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  border: none;
+  position: absolute;
+  top: -44px;
+  right: -15px;
+  cursor: pointer;
+  margin-right: 19px;
+}
+
+@media screen and (min-width: 490px) {
+  .popup__close {
+    margin-right: 0;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .popup__close {
+    min-width: 40px;
+    height: 40px;
+    top: -41px;
+    right: -39px;
+    background-size: 40px;
+  }
+}
