@@ -11,6 +11,7 @@
   margin: 0;
   margin-top: 36px;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .profile__add-button:active {
