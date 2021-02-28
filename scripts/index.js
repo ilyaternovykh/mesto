@@ -9,11 +9,11 @@ let formElement = document.querySelector('.popup__container');// Восполь�
 let nameInput = formElement.querySelector('.popup__input_type_name');// Воспользуйтесь инструментом .querySelector()
 let jobInput = formElement.querySelector('.popup__input_type_job');// Воспользуйтесь инструментом .querySelector()
 
-function showPopup() {
-  popup.classList.add('popup_opened');
+function openPopup() {
+  nameInput.value = profileTitle.textContent;
+  jobInput.value = profileSubtitle.textContent;
 
-  nameInput.value = profileTitle.innerHTML;
-  jobInput.value = profileSubtitle.innerHTML;
+  popup.classList.add('popup_opened');
 }
 
 function closePopup() {
@@ -33,8 +33,8 @@ function formSubmitHandler (evt) {
     // Выберите элементы, куда должны быть вставлены значения полей
 
     // Вставьте новые значения с помощью textContent
-    document.querySelector('.profile__title').textContent = nameInput.value;
-    document.querySelector('.profile__subtitle').textContent = jobInput.value;
+    profileTitle.textContent = nameInput.value;
+    profileSubtitle.textContent = jobInput.value;
     closePopup();
 }
 
@@ -43,5 +43,5 @@ function formSubmitHandler (evt) {
 formElement.addEventListener('submit', formSubmitHandler);
 
 
-showPopupButton.addEventListener('click', showPopup);
+showPopupButton.addEventListener('click', openPopup);
 closePopupButton.addEventListener('click', closePopup);
