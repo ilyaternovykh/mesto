@@ -6,8 +6,8 @@ let profileSubtitle = document.querySelector('.profile__subtitle');
 // Находим форму в DOM
 let formElement = document.querySelector('.popup__container');// Воспользуйтесь методом querySelector()
 // Находим поля формы в DOM
-let nameInput = formElement.querySelector('.popup__input-title');// Воспользуйтесь инструментом .querySelector()
-let jobInput = formElement.querySelector('.popup__input-subtitle');// Воспользуйтесь инструментом .querySelector()
+let nameInput = formElement.querySelector('.popup__input_type_name');// Воспользуйтесь инструментом .querySelector()
+let jobInput = formElement.querySelector('.popup__input_type_job');// Воспользуйтесь инструментом .querySelector()
 
 function showPopup() {
   popup.classList.add('popup_opened');
