@@ -9,6 +9,54 @@ let formElement = document.querySelector('.popup__container');// Восполь�
 let nameInput = formElement.querySelector('.popup__input_type_name');// Воспользуйтесь инструментом .querySelector()
 let jobInput = formElement.querySelector('.popup__input_type_job');// Воспользуйтесь инструментом .querySelector()
 
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
+const container = document.querySelector('.cards');
+const templateElement = document.querySelector('.card-template');
+
+function createCardDomNode(item) {
+  const newItem = templateElement.content.cloneNode(true);
+  const title = newItem.querySelector('.cards__title');
+  const image = newItem.querySelector('.cards__image');
+
+  title.textContent = item.name;
+  image.src = item.link;
+  image.alt = item.name;
+
+  return newItem;
+}
+
+function renderGrid() {
+  const result = initialCards.map(createCardDomNode);
+
+  container.append(...result);
+}
+
 function openPopup() {
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileSubtitle.textContent;
@@ -38,6 +86,8 @@ function formSubmitHandler (evt) {
     closePopup();
 }
 
+
+
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
 formElement.addEventListener('submit', formSubmitHandler);
@@ -45,3 +95,5 @@ formElement.addEventListener('submit', formSubmitHandler);
 
 showPopupButton.addEventListener('click', openPopup);
 closePopupButton.addEventListener('click', closePopup);
+
+renderGrid();
