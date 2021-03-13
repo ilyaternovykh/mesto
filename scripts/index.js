@@ -12,6 +12,8 @@ let formElement = document.querySelector('.popup__container');// Восполь�
 // Находим поля формы в DOM
 let nameInput = formElement.querySelector('.popup__input_type_name');// Воспользуйтесь инструментом .querySelector()
 let jobInput = formElement.querySelector('.popup__input_type_job');// Воспользуйтесь инструментом .querySelector()
+let titleInput = popupCards.querySelector('.popup__input_type_title');
+let linkInput = popupCards.querySelector('.popup__input_type_image-link');
 
 const initialCards = [
   {
@@ -55,6 +57,19 @@ function createCardDomNode(item) {
   return newItem;
 }
 
+function addCardListener(evt) {
+  evt.preventDefault();
+  const inputTitle = titleInput.value;
+  const inputLink = linkInput.value;
+
+  const newCard = createCardDomNode({name: inputTitle, link: inputLink});
+  container.prepend(newCard);
+
+  inputTitle.value = '';
+  inputLink.value = '';
+  closePopup(popupCards);
+}
+
 function renderGrid() {
   const result = initialCards.map(createCardDomNode);
 
@@ -77,6 +92,9 @@ showPopupProfile.addEventListener('click', function() {
 })
 
 showPopupCards.addEventListener('click', function() {
+  titleInput.value = "";
+  linkInput.value = "";
+
   openPopup(popupCards);
 })
 
@@ -123,17 +141,17 @@ function formSubmitHandler (evt) {
     closePopup(popupProfile);
 }
 
-function formSubmitCards (evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-  console.log('Привет!')
+// function formSubmitCards (evt) {
+//   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+//   console.log('Привет!')
 
-  //closePopup(popupProfile);
-}
+//   //closePopup(popupProfile);
+// }
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
 popupProfile.addEventListener('submit', formSubmitHandler);
-popupCards.addEventListener('submit', formSubmitCards);
+popupCards.addEventListener('submit', addCardListener);
 
 // showPopupProfile.addEventListener('click', () => {
 //   openPopup(popupProfile);
