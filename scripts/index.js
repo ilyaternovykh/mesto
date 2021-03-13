@@ -1,6 +1,10 @@
-let showPopupButton = document.querySelector('.profile__edit-button');
-let popup = document.querySelector('.popup');
-let closePopupButton = document.querySelector('.popup__close');
+let showPopupProfile = document.querySelector('.profile__edit-button');
+let showPopupCards = document.querySelector('.profile__add-button');
+//let popup = document.querySelector('.popup');
+let popupProfile= document.querySelector('.popup_type_profile');
+let popupCards = document.querySelector('.popup_type_cards');
+let closePopupButtonProfile = document.querySelector('.popup__close_type_profile');
+let closePopupButtonCards = document.querySelector('.popup__close_type_cards');
 let profileTitle = document.querySelector('.profile__title');
 let profileSubtitle = document.querySelector('.profile__subtitle');
 // Находим форму в DOM
@@ -57,17 +61,50 @@ function renderGrid() {
   container.append(...result);
 }
 
-function openPopup() {
-  nameInput.value = profileTitle.textContent;
-  jobInput.value = profileSubtitle.textContent;
-
+function openPopup (popup) {
   popup.classList.add('popup_opened');
 }
 
-function closePopup() {
+function closePopup (popup) {
   popup.classList.remove('popup_opened');
 }
 
+showPopupProfile.addEventListener('click', function() {
+  nameInput.value = profileTitle.textContent;
+  jobInput.value = profileSubtitle.textContent;
+
+  openPopup(popupProfile);
+})
+
+showPopupCards.addEventListener('click', function() {
+  openPopup(popupCards);
+})
+
+closePopupButtonProfile.addEventListener('click', function() {
+  closePopup(popupProfile);
+})
+
+closePopupButtonCards.addEventListener('click', function() {
+  closePopup(popupCards);
+})
+// function openPopup(popup) {
+//   // nameInput.value = profileTitle.textContent;
+//   // jobInput.value = profileSubtitle.textContent;
+
+//   popup.classList.add('popup_opened');
+// }
+
+// function closePopup() {
+//   popup.classList.remove('popup_opened');
+// }
+
+// function togglePopup(popup) {
+//   popup.classList.toggle('popup_opened');
+// }
+// function togglePopup(evt) {
+//   console.log(evt.target.closest('.popup'));
+//   //popup.classList.toggle('popup_opened');
+// }
 
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
@@ -83,17 +120,43 @@ function formSubmitHandler (evt) {
     // Вставьте новые значения с помощью textContent
     profileTitle.textContent = nameInput.value;
     profileSubtitle.textContent = jobInput.value;
-    closePopup();
+    closePopup(popupProfile);
 }
 
+function formSubmitCards (evt) {
+  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+  console.log('Привет!')
 
+  //closePopup(popupProfile);
+}
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
-formElement.addEventListener('submit', formSubmitHandler);
+popupProfile.addEventListener('submit', formSubmitHandler);
+popupCards.addEventListener('submit', formSubmitCards);
 
+// showPopupProfile.addEventListener('click', () => {
+//   openPopup(popupProfile);
+// });
+// // closePopupButtons.addEventListener('click', closePopup);
+// showPopupCards.addEventListener('click', () => {
+//   openPopup(popupCards);
+// });
 
-showPopupButton.addEventListener('click', openPopup);
-closePopupButton.addEventListener('click', closePopup);
+// showPopupProfile.addEventListener('click', togglePopup);
+
+// showPopupCards.addEventListener('click', () => {
+//   togglePopup;
+// });
+
+// closePopupButton.forEach((item) => {
+//   item.addEventListener('click', closePopup);
+//   console.log(item);
+//   console.log(closePopup);
+// });
+//showPopupCards.addEventListener('click', openPopup);
+
+// closePopupButton.addEventListener('click', () => { togglePopup(popupProfile); });
+// closePopupButton.addEventListener('click', () => { togglePopup(popupCards); });
 
 renderGrid();

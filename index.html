@@ -28,13 +28,22 @@
 
         </ul>
       </section>
-      <article class="popup">
+      <article class="popup popup_type_profile">
         <form class="popup__container" name="popup__container">
-          <button type="button" class="popup__close"></button>
+          <button type="button" class="popup__close popup__close_type_profile"></button>
           <h2 class="popup__title">Редактировать профиль</h2>
           <input name="profile__name" class="popup__input popup__input_type_name">
           <input name="profile__job" class="popup__input popup__input_type_job">
           <button type="submit" class="popup__submit">Сохранить</button>
+        </form>
+      </article>
+      <article class="popup popup_type_cards">
+        <form class="popup__container" name="popup__container">
+          <button type="button" class="popup__close popup__close_type_cards"></button>
+          <h2 class="popup__title">Новое место</h2>
+          <input name="cards__title" placeholder="Название" class="popup__input popup__input_type_title">
+          <input name="cards__image-link" placeholder="Ссылка на картинку" class="popup__input popup__input_type_image-link">
+          <button type="submit" class="popup__submit">Создать</button>
         </form>
       </article>
     </main>
@@ -52,15 +61,6 @@
       </div>
     </li>
   </template>
-  <article class="popup popup_type_cards">
-    <form class="popup__container" name="popup__container">
-      <button type="button" class="popup__close"></button>
-      <h2 class="popup__title">Новое место</h2>
-      <input name="cards__title" class="popup__input popup__input_type_title">
-      <input name="cards__image-link" class="popup__input popup__input_type_image-link">
-      <button type="submit" class="popup__submit">Создать</button>
-    </form>
-  </article>
   <script src="./scripts/index.js"></script>
 </body>
 </html>
