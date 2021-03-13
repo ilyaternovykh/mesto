@@ -57,21 +57,30 @@ function createCardDomNode(item) {
   return newItem;
 }
 
-function addCardListener(evt) {
+function addCardFormListener(evt) {
   evt.preventDefault();
   const inputTitle = titleInput.value;
   const inputLink = linkInput.value;
 
   const newCard = createCardDomNode({name: inputTitle, link: inputLink});
+
+  addCardListeners(newCard);
+
   container.prepend(newCard);
 
-  inputTitle.value = '';
-  inputLink.value = '';
+  inputTitle.value = "";
+  inputLink.value = "";
   closePopup(popupCards);
 }
 
 function renderGrid() {
-  const result = initialCards.map(createCardDomNode);
+  const result = initialCards.map(function(item) {
+    const newCard = createCardDomNode(item);
+
+    addCardListeners(newCard);
+
+    return newCard;
+  });
 
   container.append(...result);
 }
@@ -82,6 +91,40 @@ function openPopup (popup) {
 
 function closePopup (popup) {
   popup.classList.remove('popup_opened');
+}
+
+function formSubmitHandler (evt) {
+  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+                                              // Так мы можем определить свою логику отправки.
+                                              // О том, как это делать, расскажем позже.
+
+  // Получите значение полей jobInput и nameInput из свойства value
+
+  // Выберите элементы, куда должны быть вставлены значения полей
+
+  // Вставьте новые значения с помощью textContent
+  profileTitle.textContent = nameInput.value;
+  profileSubtitle.textContent = jobInput.value;
+  closePopup(popupProfile);
+}
+
+function deleteCard(evt) {
+  const target = evt.target;
+  const currentCard = target.closest('.cards__item');
+
+  currentCard .remove();
+}
+
+function likeCard(evt) {
+  alert('Замечательно!');
+}
+
+function addCardListeners(card) {
+  const deleteButton = card.querySelector('.cards__trash');
+  deleteButton.addEventListener('click', deleteCard);
+
+  const likeButton = card.querySelector('.cards__like');
+  likeButton.addEventListener('click', likeCard);
 }
 
 showPopupProfile.addEventListener('click', function() {
@@ -126,20 +169,7 @@ closePopupButtonCards.addEventListener('click', function() {
 
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
-function formSubmitHandler (evt) {
-    evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-                                                // Так мы можем определить свою логику отправки.
-                                                // О том, как это делать, расскажем позже.
 
-    // Получите значение полей jobInput и nameInput из свойства value
-
-    // Выберите элементы, куда должны быть вставлены значения полей
-
-    // Вставьте новые значения с помощью textContent
-    profileTitle.textContent = nameInput.value;
-    profileSubtitle.textContent = jobInput.value;
-    closePopup(popupProfile);
-}
 
 // function formSubmitCards (evt) {
 //   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
@@ -151,7 +181,7 @@ function formSubmitHandler (evt) {
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
 popupProfile.addEventListener('submit', formSubmitHandler);
-popupCards.addEventListener('submit', addCardListener);
+popupCards.addEventListener('submit', addCardFormListener);
 
 // showPopupProfile.addEventListener('click', () => {
 //   openPopup(popupProfile);
