@@ -1,0 +1,7 @@
+.popup__container-image {
+  max-width: 77vw;
+  max-height: 85vh;
+  position: relative;
+  margin: 0;
+  padding: 0;
+}

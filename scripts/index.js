@@ -1,10 +1,10 @@
-let showPopupProfile = document.querySelector('.profile__edit-button');
-let showPopupCards = document.querySelector('.profile__add-button');
+const showPopupProfile = document.querySelector('.profile__edit-button');
+const showPopupCards = document.querySelector('.profile__add-button');
 //let popup = document.querySelector('.popup');
-let popupProfile= document.querySelector('.popup_type_profile');
+let popupProfile = document.querySelector('.popup_type_profile');
 let popupCards = document.querySelector('.popup_type_cards');
-let closePopupButtonProfile = document.querySelector('.popup__close_type_profile');
-let closePopupButtonCards = document.querySelector('.popup__close_type_cards');
+const closePopupButtonProfile = popupProfile.querySelector('.popup__close_type_profile');
+const closePopupButtonCards = popupCards.querySelector('.popup__close_type_cards');
 let profileTitle = document.querySelector('.profile__title');
 let profileSubtitle = document.querySelector('.profile__subtitle');
 // Находим форму в DOM
@@ -14,6 +14,11 @@ let nameInput = formElement.querySelector('.popup__input_type_name');// Восп
 let jobInput = formElement.querySelector('.popup__input_type_job');// Воспользуйтесь инструментом .querySelector()
 let titleInput = popupCards.querySelector('.popup__input_type_title');
 let linkInput = popupCards.querySelector('.popup__input_type_image-link');
+
+let popupImageContainer = document.querySelector('.popup_type_image');
+let popupImage = popupImageContainer.querySelector('.popup__image');
+let popupImageTitle = popupImageContainer.querySelector('.popup__image-title');
+const closePopupButtonImage = popupImageContainer.querySelector('.popup__close_type_image');
 
 const initialCards = [
   {
@@ -119,12 +124,23 @@ function likeCard(evt) {
   evt.target.classList.toggle('cards__like_active');
 }
 
+function openPopupImage(evt) {
+  popupImage.src = evt.target.src;
+  popupImage.alt = evt.target.alt;
+  popupImageTitle.textContent = evt.target.alt;
+
+  openPopup(popupImageContainer);
+}
+
 function addCardListeners(card) {
   const deleteButton = card.querySelector('.cards__trash');
   deleteButton.addEventListener('click', deleteCard);
 
   const likeButton = card.querySelector('.cards__like');
   likeButton.addEventListener('click', likeCard);
+
+  const popupImageCard = card.querySelector('.cards__image');
+  popupImageCard.addEventListener('click', openPopupImage)
 }
 
 showPopupProfile.addEventListener('click', function() {
@@ -147,6 +163,10 @@ closePopupButtonProfile.addEventListener('click', function() {
 
 closePopupButtonCards.addEventListener('click', function() {
   closePopup(popupCards);
+})
+
+closePopupButtonImage.addEventListener('click', function() {
+  closePopup(popupImageContainer);
 })
 // function openPopup(popup) {
 //   // nameInput.value = profileTitle.textContent;
