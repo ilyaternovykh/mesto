@@ -11,5 +11,8 @@
   max-width: 100%;
   min-width: 320px;
   box-sizing: border-box;
-  display: none;
+  display: flex;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.5s linear;
 }
