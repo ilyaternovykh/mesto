@@ -112,11 +112,11 @@ function deleteCard(evt) {
   const target = evt.target;
   const currentCard = target.closest('.cards__item');
 
-  currentCard .remove();
+  currentCard.remove();
 }
 
 function likeCard(evt) {
-  alert('Замечательно!');
+  evt.target.classList.toggle('cards__like_active');
 }
 
 function addCardListeners(card) {
