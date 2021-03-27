@@ -30,16 +30,52 @@ const closePopupEsc = (evt) => {
   if (evt.keyCode == 27) {
     const activePopup = document.querySelector('.popup_opened');
 
+    document.removeEventListener('keydown', closePopupEsc);
     closePopup(activePopup);
   }
 };
+
+const closePopupClick = () => {
+  const activePopup = document.querySelector('.popup_opened');
+
+  console.log(activePopup);
+
+  activePopup.addEventListener('click', (evt) => {
+
+    if (evt.currentTarget.classList.contains('popup_opened')) {
+      activePopup.querySelector('.popup__container').addEventListener('click', function (evt) {
+        evt.stopPropagation();
+      });
+
+      closePopup(activePopup)
+    }
+  });
+}
+
+const closePopupClickCard = () => {
+  const activePopup = document.querySelector('.popup_opened');
+
+  activePopup.addEventListener('click', (evt) => {
+    console.log(evt);
+    if (evt.currentTarget.classList.contains('popup_opened')) {
+      activePopup.querySelector('.popup__container-image').addEventListener('click', function (evt) {
+        evt.stopPropagation();
+      });
+
+      closePopup(activePopup)
+    }
+  });
+}
 
 function openPopupImage(evt) {
   popupImage.src = evt.target.src;
   popupImage.alt = evt.target.alt;
   popupImageTitle.textContent = evt.target.alt;
 
+  document.addEventListener('keydown', closePopupEsc);
+
   openPopup(popupImageContainer);
+  closePopupClickCard();
 }
 
 function deleteCard(evt) {
@@ -117,14 +153,21 @@ showPopupProfile.addEventListener('click', function() {
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileSubtitle.textContent;
 
+  document.addEventListener('keydown', closePopupEsc);
+
+
   openPopup(popupProfile);
+  closePopupClick();
 })
 
 showPopupCards.addEventListener('click', function() {
   titleInput.value = "";
   linkInput.value = "";
 
+  document.addEventListener('keydown', closePopupEsc);
+
   openPopup(popupCards);
+  closePopupClick();
 })
 
 closePopupButtonProfile.addEventListener('click', function() {
@@ -143,6 +186,5 @@ popupProfile.addEventListener('submit', editProfileFormSubmitHandler);
 popupCards.addEventListener('submit', addCardFormListener);
 
 
-document.addEventListener('keydown', closePopupEsc);
 
 renderGrid();
