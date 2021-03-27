@@ -18,7 +18,6 @@ const closePopupButtonImage = popupImageContainer.querySelector('.popup__close_t
 const container = document.querySelector('.cards');
 const templateElement = document.querySelector('.card-template');
 
-
 function openPopup (popup) {
   popup.classList.add('popup_opened');
 }
@@ -26,6 +25,14 @@ function openPopup (popup) {
 function closePopup (popup) {
   popup.classList.remove('popup_opened');
 }
+
+const closePopupEsc = (evt) => {
+  if (evt.keyCode == 27) {
+    const activePopup = document.querySelector('.popup_opened');
+
+    closePopup(activePopup);
+  }
+};
 
 function openPopupImage(evt) {
   popupImage.src = evt.target.src;
@@ -134,5 +141,8 @@ closePopupButtonImage.addEventListener('click', function() {
 
 popupProfile.addEventListener('submit', editProfileFormSubmitHandler);
 popupCards.addEventListener('submit', addCardFormListener);
+
+
+document.addEventListener('keydown', closePopupEsc);
 
 renderGrid();

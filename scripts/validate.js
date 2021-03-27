@@ -1,6 +1,6 @@
 const allInputsEmpty = (inputList) => {
 
-  return !inputList.some(inputElement => inputElement.textContent.length > 0);
+  return !inputList.some(inputElement => inputElement.value.length > 0);
 };
 
 const hasInvalidInput = (inputList) => {
