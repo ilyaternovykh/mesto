@@ -38,14 +38,12 @@ const closePopupEsc = (evt) => {
 const closePopupClick = () => {
   const activePopup = document.querySelector('.popup_opened');
 
-  console.log(activePopup);
+  activePopup.querySelector('.popup__container').addEventListener('click', function (evt) {
+    evt.stopPropagation();
+  });
 
   activePopup.addEventListener('click', (evt) => {
-
     if (evt.currentTarget.classList.contains('popup_opened')) {
-      activePopup.querySelector('.popup__container').addEventListener('click', function (evt) {
-        evt.stopPropagation();
-      });
 
       closePopup(activePopup)
     }
@@ -55,12 +53,12 @@ const closePopupClick = () => {
 const closePopupClickCard = () => {
   const activePopup = document.querySelector('.popup_opened');
 
+  activePopup.querySelector('.popup__container-image').addEventListener('click', function (evt) {
+    evt.stopPropagation();
+  });
+
   activePopup.addEventListener('click', (evt) => {
-    console.log(evt);
     if (evt.currentTarget.classList.contains('popup_opened')) {
-      activePopup.querySelector('.popup__container-image').addEventListener('click', function (evt) {
-        evt.stopPropagation();
-      });
 
       closePopup(activePopup)
     }
