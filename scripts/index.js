@@ -1,3 +1,7 @@
+import { Card } from './Card.js';
+import {initialCards} from './initial-сards.js';
+import {templateElement} from './utils.js';
+
 const showPopupProfile = document.querySelector('.profile__edit-button');
 const showPopupCards = document.querySelector('.profile__add-button');
 const popupProfile = document.querySelector('.popup_type_profile');
@@ -16,7 +20,7 @@ const popupImage = popupImageContainer.querySelector('.popup__image');
 const popupImageTitle = popupImageContainer.querySelector('.popup__image-title');
 const closePopupButtonImage = popupImageContainer.querySelector('.popup__close_type_image');
 const container = document.querySelector('.cards');
-const templateElement = document.querySelector('.card-template');
+// const templateElement = document.querySelector('.card-template');
 
 function openPopup (popup) {
   popup.classList.add('popup_opened');
@@ -102,14 +106,23 @@ function addCardFormListener(evt) {
   closePopup(popupCards);
 }
 
+// function renderGrid() {
+//   const result = initialCards.map(function(item) {
+//     const newCard = createCardDomNode(item);
+
+//     return newCard;
+//   });
+
+//   container.append(...result);
+// }
+
 function renderGrid() {
-  const result = initialCards.map(function(item) {
-    const newCard = createCardDomNode(item);
+  initialCards.forEach((item) => {
+    const card = new Card(item, '.card-template');
+    const cardElement = card.generateCard();
 
-    return newCard;
+    container.append(cardElement);
   });
-
-  container.append(...result);
 }
 
 function editProfileFormSubmitHandler(evt) {
