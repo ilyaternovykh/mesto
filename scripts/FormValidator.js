@@ -1,5 +1,3 @@
-
-
 export class FormValidator {
   constructor(enableObject, formElement) {
     this._inputSelector = enableObject.inputSelector;
@@ -8,6 +6,14 @@ export class FormValidator {
     this._inputErrorClass = enableObject.inputErrorClass;
     this._errorClass = enableObject.errorClass;
     this._formElement = formElement;
+  }
+
+  resetValidation() {
+    this._inputList.forEach((inputElement) => {
+      this._hideInputError(inputElement)
+    });
+
+    this._toggleButtonState();
   }
 
   enableValidation() {
@@ -78,4 +84,6 @@ export class FormValidator {
     inputElement.classList.remove(this._inputErrorClass);
     errorElement.classList.remove(this._errorClass);
   }
+
+
 }

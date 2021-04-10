@@ -18,10 +18,25 @@ const jobInput = formElement.querySelector('.popup__input_type_job');
 const titleInput = popupCards.querySelector('.popup__input_type_title');
 const linkInput = popupCards.querySelector('.popup__input_type_image-link');
 const popupImageContainer = document.querySelector('.popup_type_image');
+const popupImage = popupImageContainer.querySelector('.popup__image');
 const closePopupButtonImage = popupImageContainer.querySelector('.popup__close_type_image');
 const container = document.querySelector('.cards');
 const templateElement = document.querySelector('.card-template');
 
+const validationConfig = {
+  formSelector: '.popup__container',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__submit',
+  inactiveButtonClass: 'popup__submit_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+};
+
+const addFormValidator = new FormValidator(validationConfig, formElement);
+addFormValidator.enableValidation();
+
+const addFormValidatorCard = new FormValidator(validationConfig, formElementCard);
+addFormValidatorCard.enableValidation();
 
 function openPopup (popup) {
   popup.classList.add('popup_opened');
@@ -50,8 +65,8 @@ const closePopupClick = (popup) => {
 }
 
 const handleCardClick = (name, link) => {
-  popupImageContainer.querySelector('.popup__image').src = link;
-  popupImageContainer.querySelector('.popup__image').alt = name;
+  popupImage.src = link;
+  popupImage.alt = name;
   popupImageContainer.querySelector('.popup__image-title').textContent = name;
 
   openPopup(popupImageContainer);
@@ -107,6 +122,8 @@ showPopupCards.addEventListener('click', function() {
   titleInput.value = "";
   linkInput.value = "";
 
+  addFormValidatorCard.resetValidation();
+
   openPopup(popupCards);
 })
 
@@ -124,22 +141,6 @@ closePopupButtonImage.addEventListener('click', function() {
 
 popupProfile.addEventListener('submit', editProfileFormSubmitHandler);
 popupCards.addEventListener('submit', addCardFormListener);
-
-const enableValidation = {
-  formSelector: '.popup__container',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__submit',
-  inactiveButtonClass: 'popup__submit_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
-};
-
-const addFormValidator = new FormValidator(enableValidation, formElement);
-addFormValidator.enableValidation();
-
-const addFormValidatorCard = new FormValidator(enableValidation, formElementCard);
-addFormValidatorCard.enableValidation();
-
 
 
 closePopupClick(popupProfile);
