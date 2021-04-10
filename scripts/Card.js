@@ -49,6 +49,9 @@ export class Card {
 
   _openPopupImage() {
     popupImageContainer.querySelector('.popup__image').src = this._link;
+    popupImageContainer.querySelector('.popup__image').alt = this._name;
+    popupImageContainer.querySelector('.popup__image-title').textContent = this._name;
+
     openPopup(popupImageContainer);
   }
 }
