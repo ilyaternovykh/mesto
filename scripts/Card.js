@@ -1,7 +1,4 @@
 import {popupImageContainer, openPopup} from './utils.js';
-// import {initialCards} from './initial-сards.js';
-
-// console.log(templateElement);
 
 export class Card {
   constructor(data, cardTemplateSelector) {

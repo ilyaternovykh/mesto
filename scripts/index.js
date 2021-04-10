@@ -18,72 +18,8 @@ const nameInput = formElement.querySelector('.popup__input_type_name');
 const jobInput = formElement.querySelector('.popup__input_type_job');
 const titleInput = popupCards.querySelector('.popup__input_type_title');
 const linkInput = popupCards.querySelector('.popup__input_type_image-link');
-// const popupImageContainer = document.querySelector('.popup_type_image');
-// const popupImage = popupImageContainer.querySelector('.popup__image');
-// const popupImageTitle = popupImageContainer.querySelector('.popup__image-title');
 const closePopupButtonImage = popupImageContainer.querySelector('.popup__close_type_image');
 const container = document.querySelector('.cards');
-// const templateElement = document.querySelector('.card-template');
-
-
-
-// function openPopupImage(evt) {
-//   popupImage.src = evt.target.src;
-//   popupImage.alt = evt.target.alt;
-//   popupImageTitle.textContent = evt.target.alt;
-
-//   openPopup(popupImageContainer);
-// }
-
-// function deleteCard(evt) {
-//   const target = evt.target;
-//   const currentCard = target.closest('.cards__item');
-
-//   currentCard.remove();
-// }
-
-// function likeCard(evt) {
-//   evt.target.classList.toggle('cards__like_active');
-// }
-
-// function addCardListeners(card) {
-//   const deleteButton = card.querySelector('.cards__trash');
-//   deleteButton.addEventListener('click', deleteCard);
-
-//   const likeButton = card.querySelector('.cards__like');
-//   likeButton.addEventListener('click', likeCard);
-
-//   const popupImageCard = card.querySelector('.cards__image');
-//   popupImageCard.addEventListener('click', openPopupImage)
-// }
-
-// function createCardDomNode(item) {
-//   const newItem = templateElement.content.cloneNode(true);
-//   const title = newItem.querySelector('.cards__title');
-//   const image = newItem.querySelector('.cards__image');
-
-//   title.textContent = item.name;
-//   image.src = item.link;
-//   image.alt = item.name;
-
-//   addCardListeners(newItem);
-
-//   return newItem;
-// }
-
-// function addCardFormListener(evt) {
-//   evt.preventDefault();
-//   const inputTitle = titleInput.value;
-//   const inputLink = linkInput.value;
-
-//   const newCard = createCardDomNode({name: inputTitle, link: inputLink});
-
-//   container.prepend(newCard);
-
-//   inputTitle.value = "";
-//   inputLink.value = "";
-//   closePopup(popupCards);
-// }
 
 function addCardFormListener(evt) {
   evt.preventDefault();
@@ -95,20 +31,9 @@ function addCardFormListener(evt) {
 
   container.prepend(cardElement);
 
-  // inputTitle.value = "";
-  // inputLink.value = "";
+
   closePopup(popupCards);
 }
-
-// function renderGrid() {
-//   const result = initialCards.map(function(item) {
-//     const newCard = createCardDomNode(item);
-
-//     return newCard;
-//   });
-
-//   container.append(...result);
-// }
 
 function renderGrid() {
   initialCards.forEach((item) => {
