@@ -1,6 +1,7 @@
 import { Card } from './Card.js';
 import {initialCards} from './initial-сards.js';
-import {templateElement} from './utils.js';
+import {templateElement, popupImageContainer, openPopup, closePopup, closePopupClick} from './utils.js';
+
 
 const showPopupProfile = document.querySelector('.profile__edit-button');
 const showPopupCards = document.querySelector('.profile__add-button');
@@ -15,68 +16,44 @@ const nameInput = formElement.querySelector('.popup__input_type_name');
 const jobInput = formElement.querySelector('.popup__input_type_job');
 const titleInput = popupCards.querySelector('.popup__input_type_title');
 const linkInput = popupCards.querySelector('.popup__input_type_image-link');
-const popupImageContainer = document.querySelector('.popup_type_image');
-const popupImage = popupImageContainer.querySelector('.popup__image');
-const popupImageTitle = popupImageContainer.querySelector('.popup__image-title');
+// const popupImageContainer = document.querySelector('.popup_type_image');
+// const popupImage = popupImageContainer.querySelector('.popup__image');
+// const popupImageTitle = popupImageContainer.querySelector('.popup__image-title');
 const closePopupButtonImage = popupImageContainer.querySelector('.popup__close_type_image');
 const container = document.querySelector('.cards');
 // const templateElement = document.querySelector('.card-template');
 
-function openPopup (popup) {
-  popup.classList.add('popup_opened');
-  document.addEventListener('keydown', closePopupEsc);
-}
 
-function closePopup (popup) {
-  popup.classList.remove('popup_opened');
-  document.removeEventListener('keydown', closePopupEsc);
-}
 
-const closePopupEsc = (evt) => {
-  if (evt.key == 'Escape') {
-    const activePopup = document.querySelector('.popup_opened');
+// function openPopupImage(evt) {
+//   popupImage.src = evt.target.src;
+//   popupImage.alt = evt.target.alt;
+//   popupImageTitle.textContent = evt.target.alt;
 
-    closePopup(activePopup);
-  }
-};
+//   openPopup(popupImageContainer);
+// }
 
-const closePopupClick = (popup) => {
-    popup.addEventListener('click', (evt) => {
-    if (evt.target.classList.contains('popup_opened')) {
-      closePopup(popup)
-    }
-  });
-}
+// function deleteCard(evt) {
+//   const target = evt.target;
+//   const currentCard = target.closest('.cards__item');
 
-function openPopupImage(evt) {
-  popupImage.src = evt.target.src;
-  popupImage.alt = evt.target.alt;
-  popupImageTitle.textContent = evt.target.alt;
+//   currentCard.remove();
+// }
 
-  openPopup(popupImageContainer);
-}
+// function likeCard(evt) {
+//   evt.target.classList.toggle('cards__like_active');
+// }
 
-function deleteCard(evt) {
-  const target = evt.target;
-  const currentCard = target.closest('.cards__item');
+// function addCardListeners(card) {
+//   const deleteButton = card.querySelector('.cards__trash');
+//   deleteButton.addEventListener('click', deleteCard);
 
-  currentCard.remove();
-}
+//   const likeButton = card.querySelector('.cards__like');
+//   likeButton.addEventListener('click', likeCard);
 
-function likeCard(evt) {
-  evt.target.classList.toggle('cards__like_active');
-}
-
-function addCardListeners(card) {
-  const deleteButton = card.querySelector('.cards__trash');
-  deleteButton.addEventListener('click', deleteCard);
-
-  const likeButton = card.querySelector('.cards__like');
-  likeButton.addEventListener('click', likeCard);
-
-  const popupImageCard = card.querySelector('.cards__image');
-  popupImageCard.addEventListener('click', openPopupImage)
-}
+//   const popupImageCard = card.querySelector('.cards__image');
+//   popupImageCard.addEventListener('click', openPopupImage)
+// }
 
 function createCardDomNode(item) {
   const newItem = templateElement.content.cloneNode(true);
@@ -118,7 +95,7 @@ function addCardFormListener(evt) {
 
 function renderGrid() {
   initialCards.forEach((item) => {
-    const card = new Card(item, '.card-template');
+    const card = new Card(item, templateElement);
     const cardElement = card.generateCard();
 
     container.append(cardElement);
