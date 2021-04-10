@@ -7,8 +7,6 @@ const showPopupProfile = document.querySelector('.profile__edit-button');
 const showPopupCards = document.querySelector('.profile__add-button');
 const popupProfile = document.querySelector('.popup_type_profile');
 const popupCards = document.querySelector('.popup_type_cards');
-const closePopupButtonProfile = popupProfile.querySelector('.popup__close_type_profile');
-const closePopupButtonCards = popupCards.querySelector('.popup__close_type_cards');
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
 const formElement = document.querySelector('.popup__container');
@@ -19,7 +17,6 @@ const titleInput = popupCards.querySelector('.popup__input_type_title');
 const linkInput = popupCards.querySelector('.popup__input_type_image-link');
 const popupImageContainer = document.querySelector('.popup_type_image');
 const popupImage = popupImageContainer.querySelector('.popup__image');
-const closePopupButtonImage = popupImageContainer.querySelector('.popup__close_type_image');
 const container = document.querySelector('.cards');
 const templateElement = document.querySelector('.card-template');
 
@@ -56,13 +53,18 @@ const closePopupEsc = (evt) => {
   }
 };
 
-const closePopupClick = (popup) => {
-    popup.addEventListener('click', (evt) => {
+const popups = document.querySelectorAll('.popup');
+
+popups.forEach((popup) => {
+  popup.addEventListener('click', (evt) => {
     if (evt.target.classList.contains('popup_opened')) {
       closePopup(popup)
     }
-  });
-}
+    if (evt.target.classList.contains('popup__close')) {
+      closePopup(popup)
+    }
+  })
+})
 
 const handleCardClick = (name, link) => {
   popupImage.src = link;
@@ -127,23 +129,7 @@ showPopupCards.addEventListener('click', function() {
   openPopup(popupCards);
 })
 
-closePopupButtonProfile.addEventListener('click', function() {
-  closePopup(popupProfile);
-})
-
-closePopupButtonCards.addEventListener('click', function() {
-  closePopup(popupCards);
-})
-
-closePopupButtonImage.addEventListener('click', function() {
-  closePopup(popupImageContainer);
-})
-
 popupProfile.addEventListener('submit', editProfileFormSubmitHandler);
 popupCards.addEventListener('submit', addCardFormListener);
 
-
-closePopupClick(popupProfile);
-closePopupClick(popupCards);
-closePopupClick(popupImageContainer);
 renderGrid();
