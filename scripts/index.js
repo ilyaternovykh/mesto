@@ -5,6 +5,7 @@ import {initialCards} from './initial-сards.js';
 
 const showPopupProfile = document.querySelector('.profile__edit-button');
 const showPopupCards = document.querySelector('.profile__add-button');
+const popups = document.querySelectorAll('.popup');
 const popupProfile = document.querySelector('.popup_type_profile');
 const popupCards = document.querySelector('.popup_type_cards');
 const profileTitle = document.querySelector('.profile__title');
@@ -52,8 +53,6 @@ const closePopupEsc = (evt) => {
     closePopup(activePopup);
   }
 };
-
-const popups = document.querySelectorAll('.popup');
 
 popups.forEach((popup) => {
   popup.addEventListener('click', (evt) => {
@@ -110,8 +109,6 @@ function editProfileFormSubmitHandler(evt) {
 
   closePopup(popupProfile);
 }
-
-
 
 showPopupProfile.addEventListener('click', function() {
   nameInput.value = profileTitle.textContent;
