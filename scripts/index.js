@@ -114,6 +114,8 @@ showPopupProfile.addEventListener('click', function() {
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileSubtitle.textContent;
 
+  addFormValidator.resetValidation();
+
   openPopup(popupProfile);
 })
 
