@@ -1,7 +1,6 @@
-import { Card } from './Card.js';
+import {Card} from './Card.js';
 import {FormValidator} from './FormValidator.js';
 import {initialCards} from './initial-сards.js';
-import {templateElement, popupImageContainer, openPopup, closePopup, closePopupClick} from './utils.js';
 
 
 const showPopupProfile = document.querySelector('.profile__edit-button');
@@ -18,8 +17,37 @@ const nameInput = formElement.querySelector('.popup__input_type_name');
 const jobInput = formElement.querySelector('.popup__input_type_job');
 const titleInput = popupCards.querySelector('.popup__input_type_title');
 const linkInput = popupCards.querySelector('.popup__input_type_image-link');
+const popupImageContainer = document.querySelector('.popup_type_image');
 const closePopupButtonImage = popupImageContainer.querySelector('.popup__close_type_image');
 const container = document.querySelector('.cards');
+const templateElement = document.querySelector('.card-template');
+
+
+function openPopup (popup) {
+  popup.classList.add('popup_opened');
+  document.addEventListener('keydown', closePopupEsc);
+}
+
+function closePopup (popup) {
+  popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupEsc);
+}
+
+const closePopupEsc = (evt) => {
+  if (evt.key == 'Escape') {
+    const activePopup = document.querySelector('.popup_opened');
+
+    closePopup(activePopup);
+  }
+};
+
+const closePopupClick = (popup) => {
+    popup.addEventListener('click', (evt) => {
+    if (evt.target.classList.contains('popup_opened')) {
+      closePopup(popup)
+    }
+  });
+}
 
 const handleCardClick = (name, link) => {
   popupImageContainer.querySelector('.popup__image').src = link;

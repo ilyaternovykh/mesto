@@ -1,12 +1,4 @@
-import {popupImageContainer, openPopup} from './utils.js';
-
 export class Card {
-  // constructor(data, cardTemplateSelector) {
-  //   this._name = data.name;
-  //   this._link = data.link;
-  //   this._cardTemplateSelector = cardTemplateSelector;
-  // }
-
   constructor(data, cardTemplateSelector, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
@@ -45,9 +37,6 @@ export class Card {
     this._trashButton.addEventListener('click', () => {
       this._deleteCardClick();
     });
-    // this._cardImage.addEventListener('click', () => {
-    //   this._openPopupImage();
-    // });
     this._cardImage.addEventListener('click', () => {
       this._handleCardClick(this._name, this._link);
     });
@@ -60,12 +49,4 @@ export class Card {
   _deleteCardClick() {
     this._trashButton.closest('.cards__item').remove();
   }
-
-  // _openPopupImage() {
-  //   popupImageContainer.querySelector('.popup__image').src = this._link;
-  //   popupImageContainer.querySelector('.popup__image').alt = this._name;
-  //   popupImageContainer.querySelector('.popup__image-title').textContent = this._name;
-
-  //   openPopup(popupImageContainer);
-  // }
 }
