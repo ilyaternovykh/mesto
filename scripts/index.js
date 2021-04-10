@@ -1,4 +1,5 @@
 import { Card } from './Card.js';
+import {FormValidator} from './FormValidator.js';
 import {initialCards} from './initial-сards.js';
 import {templateElement, popupImageContainer, openPopup, closePopup, closePopupClick} from './utils.js';
 
@@ -12,6 +13,7 @@ const closePopupButtonCards = popupCards.querySelector('.popup__close_type_cards
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
 const formElement = document.querySelector('.popup__container');
+const formElementCard = document.querySelector('.popup__container_type_cards');
 const nameInput = formElement.querySelector('.popup__input_type_name');
 const jobInput = formElement.querySelector('.popup__input_type_job');
 const titleInput = popupCards.querySelector('.popup__input_type_title');
@@ -156,6 +158,21 @@ closePopupButtonImage.addEventListener('click', function() {
 
 popupProfile.addEventListener('submit', editProfileFormSubmitHandler);
 popupCards.addEventListener('submit', addCardFormListener);
+
+const enableValidation = {
+  formSelector: '.popup__container',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__submit',
+  inactiveButtonClass: 'popup__submit_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+};
+
+const addFormValidator = new FormValidator(enableValidation, formElement);
+addFormValidator.enableValidation();
+
+const addFormValidatorCard = new FormValidator(enableValidation, formElementCard);
+addFormValidatorCard.enableValidation();
 
 
 
