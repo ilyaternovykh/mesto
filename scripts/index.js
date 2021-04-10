@@ -55,31 +55,46 @@ const container = document.querySelector('.cards');
 //   popupImageCard.addEventListener('click', openPopupImage)
 // }
 
-function createCardDomNode(item) {
-  const newItem = templateElement.content.cloneNode(true);
-  const title = newItem.querySelector('.cards__title');
-  const image = newItem.querySelector('.cards__image');
+// function createCardDomNode(item) {
+//   const newItem = templateElement.content.cloneNode(true);
+//   const title = newItem.querySelector('.cards__title');
+//   const image = newItem.querySelector('.cards__image');
 
-  title.textContent = item.name;
-  image.src = item.link;
-  image.alt = item.name;
+//   title.textContent = item.name;
+//   image.src = item.link;
+//   image.alt = item.name;
 
-  addCardListeners(newItem);
+//   addCardListeners(newItem);
 
-  return newItem;
-}
+//   return newItem;
+// }
+
+// function addCardFormListener(evt) {
+//   evt.preventDefault();
+//   const inputTitle = titleInput.value;
+//   const inputLink = linkInput.value;
+
+//   const newCard = createCardDomNode({name: inputTitle, link: inputLink});
+
+//   container.prepend(newCard);
+
+//   inputTitle.value = "";
+//   inputLink.value = "";
+//   closePopup(popupCards);
+// }
 
 function addCardFormListener(evt) {
   evt.preventDefault();
   const inputTitle = titleInput.value;
   const inputLink = linkInput.value;
 
-  const newCard = createCardDomNode({name: inputTitle, link: inputLink});
+  const newCard = new Card({name: inputTitle, link: inputLink}, templateElement);
+  const cardElement = newCard.generateCard();
 
-  container.prepend(newCard);
+  container.prepend(cardElement);
 
-  inputTitle.value = "";
-  inputLink.value = "";
+  // inputTitle.value = "";
+  // inputLink.value = "";
   closePopup(popupCards);
 }
 
