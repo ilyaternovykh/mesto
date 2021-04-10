@@ -21,8 +21,16 @@ const linkInput = popupCards.querySelector('.popup__input_type_image-link');
 const closePopupButtonImage = popupImageContainer.querySelector('.popup__close_type_image');
 const container = document.querySelector('.cards');
 
-const createCard = (data, template) => {
-  const card = new Card(data, template);
+const handleCardClick = (name, link) => {
+  popupImageContainer.querySelector('.popup__image').src = link;
+  popupImageContainer.querySelector('.popup__image').alt = name;
+  popupImageContainer.querySelector('.popup__image-title').textContent = name;
+
+  openPopup(popupImageContainer);
+}
+
+const createCard = (data, template, handleCardClick) => {
+  const card = new Card(data, template, handleCardClick);
   const cardElement = card.generateCard();
 
   return cardElement;
@@ -33,7 +41,7 @@ function addCardFormListener(evt) {
   const inputTitle = titleInput.value;
   const inputLink = linkInput.value;
 
-  const newCard = createCard({name: inputTitle, link: inputLink}, templateElement);
+  const newCard = createCard({name: inputTitle, link: inputLink}, templateElement, handleCardClick);
 
   container.prepend(newCard);
 
@@ -43,7 +51,7 @@ function addCardFormListener(evt) {
 
 function renderGrid() {
   initialCards.forEach((item) => {
-    const cardElement = createCard(item, templateElement);
+    const cardElement = createCard(item, templateElement, handleCardClick);
 
     container.append(cardElement);
   });
