@@ -1,6 +1,7 @@
-import {Card} from './Card.js';
-import {FormValidator} from './FormValidator.js';
-import {initialCards} from './initial-сards.js';
+import {Card} from '../components/Card.js';
+import {FormValidator} from '../components/FormValidator.js';
+import {Section} from '../components/Section.js';
+import {initialCards} from '../scripts/initial-сards.js';
 
 
 const showPopupProfile = document.querySelector('.profile__edit-button');
@@ -93,13 +94,25 @@ function addCardFormListener(evt) {
   closePopup(popupCards);
 }
 
-function renderGrid() {
-  initialCards.forEach((item) => {
-    const cardElement = createCard(item, templateElement, handleCardClick);
+// function renderGrid() {
+//   initialCards.forEach((item) => {
+//     const cardElement = createCard(item, templateElement, handleCardClick);
 
-    container.append(cardElement);
-  });
-}
+//     container.append(cardElement);
+//   });
+// }
+
+const cardsList = new Section({
+    items: initialCards,
+    renderer: (cardItem) => {
+      const card = new Card(cardItem, templateElement, handleCardClick);
+      const cardElement = card.generateCard();
+
+      cardsList.addItem(cardElement);
+    },
+  },
+  container
+);
 
 function editProfileFormSubmitHandler(evt) {
   evt.preventDefault();
@@ -131,4 +144,5 @@ showPopupCards.addEventListener('click', function() {
 popupProfile.addEventListener('submit', editProfileFormSubmitHandler);
 popupCards.addEventListener('submit', addCardFormListener);
 
-renderGrid();
+// renderGrid();
+cardsList.renderItems();
