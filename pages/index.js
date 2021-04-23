@@ -2,6 +2,8 @@ import {Card} from '../components/Card.js';
 import {FormValidator} from '../components/FormValidator.js';
 import {Section} from '../components/Section.js';
 import {initialCards} from '../scripts/initial-сards.js';
+import {Popup} from '../components/Popup.js';
+import {PopupWithImage} from '../components/PopupWithImage.js';
 
 
 const showPopupProfile = document.querySelector('.profile__edit-button');
@@ -66,12 +68,18 @@ popups.forEach((popup) => {
   })
 })
 
-const handleCardClick = (name, link) => {
-  popupImage.src = link;
-  popupImage.alt = name;
-  popupImageContainer.querySelector('.popup__image-title').textContent = name;
+// const handleCardClick = (name, link) => {
+//   popupImage.src = link;
+//   popupImage.alt = name;
+//   popupImageContainer.querySelector('.popup__image-title').textContent = name;
 
-  openPopup(popupImageContainer);
+//   openPopup(popupImageContainer);
+// }
+
+const handleCardClick = (name, link) => {
+  const popup = new PopupWithImage(popupImageContainer, name, link);
+
+  popup.open();
 }
 
 const createCard = (data, template, handleCardClick) => {
