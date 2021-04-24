@@ -19,11 +19,6 @@ export class PopupWithForm extends Popup {
     return this._formValue;
   }
 
-  // _formSubmit = (evt) => {
-  //   evt.preventDefault();
-  //   this._handleFormSubmit(this._getInputValues);
-  // }
-
   //добавление обработчика сабмита формы
   setEventListeners() {
     super.setEventListeners();
