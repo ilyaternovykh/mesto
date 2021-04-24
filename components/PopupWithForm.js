@@ -27,8 +27,15 @@ export class PopupWithForm extends Popup {
   //добавление обработчика сабмита формы
   setEventListeners() {
     super.setEventListeners();
+    this._getInputValues()
 
-    this._popupSelector.addEventListener('submit', (evt) => {evt.preventDefault(), this._getInputValues(), this._handleFormSubmit(this._formValue)}, {once: true});
+    this._submitListener = (evt) => {
+      evt.preventDefault();
+      this._getInputValues();
+      this._handleFormSubmit(this._formValue);
+    };
+
+    this._popupSelector.addEventListener('submit', this._submitListener);
   }
 
   //добавление сброса формы
@@ -38,5 +45,7 @@ export class PopupWithForm extends Popup {
     this._inputList.forEach((input) => {
       input.value = "";
     });
+
+    this._popupSelector.removeEventListener('submit', this._submitListener);
   }
 }
