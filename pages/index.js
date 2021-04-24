@@ -4,6 +4,7 @@ import {Section} from '../components/Section.js';
 import {initialCards} from '../scripts/initial-сards.js';
 import {Popup} from '../components/Popup.js';
 import {PopupWithImage} from '../components/PopupWithImage.js';
+import {PopupWithForm} from '../components/PopupWithForm.js';
 
 
 const showPopupProfile = document.querySelector('.profile__edit-button');
@@ -89,18 +90,29 @@ const createCard = (data, template, handleCardClick) => {
   return cardElement;
 };
 
-function addCardFormListener(evt) {
-  evt.preventDefault();
-  const inputTitle = titleInput.value;
-  const inputLink = linkInput.value;
+// function addCardFormListener(evt) {
+//   evt.preventDefault();
+//   const inputTitle = titleInput.value;
+//   const inputLink = linkInput.value;
 
-  const newCard = createCard({name: inputTitle, link: inputLink}, templateElement, handleCardClick);
+//   const newCard = createCard({name: inputTitle, link: inputLink}, templateElement, handleCardClick);
 
-  container.prepend(newCard);
+//   container.prepend(newCard);
 
 
-  closePopup(popupCards);
-}
+//   closePopup(popupCards);
+// }
+
+// function addCardFormListener(evt) {
+//   evt.preventDefault();
+//   const inputTitle = titleInput.value;
+//   const inputLink = linkInput.value;
+
+//   const newCard = createCard({name: inputTitle, link: inputLink}, templateElement, handleCardClick);
+
+//   container.prepend(newCard);
+
+// }
 
 // function renderGrid() {
 //   initialCards.forEach((item) => {
@@ -128,8 +140,17 @@ function editProfileFormSubmitHandler(evt) {
   profileTitle.textContent = nameInput.value;
   profileSubtitle.textContent = jobInput.value;
 
-  closePopup(popupProfile);
+  // closePopup(popupProfile);
 }
+
+// showPopupProfile.addEventListener('click', function() {
+//   nameInput.value = profileTitle.textContent;
+//   jobInput.value = profileSubtitle.textContent;
+
+//   addFormValidator.resetValidation();
+
+//   openPopup(popupProfile);
+// })
 
 showPopupProfile.addEventListener('click', function() {
   nameInput.value = profileTitle.textContent;
@@ -137,20 +158,55 @@ showPopupProfile.addEventListener('click', function() {
 
   addFormValidator.resetValidation();
 
-  openPopup(popupProfile);
+  const profilePopupWithForm = new PopupWithForm(popupProfile);
+
+  profilePopupWithForm.open();
+  // openPopup(popupProfile);
 })
 
+// showPopupCards.addEventListener('click', function() {
+//   titleInput.value = "";
+//   linkInput.value = "";
+
+//   addFormValidatorCard.resetValidation();
+
+//   openPopup(popupCards);
+// })
+
+const cardPopupWithForm = new PopupWithForm(
+  {
+    handleFormSubmit: (data) => {
+      // evt.preventDefault();
+
+      // let data = cardPopupWithForm._getInputValues();
+
+      // const inputTitle = titleInput.value;
+      // const inputLink = linkInput.value;
+
+      const newCard = new Card(data, templateElement, handleCardClick);
+
+
+      container.prepend(newCard.generateCard());
+      cardPopupWithForm.close();
+    }
+  },
+  popupCards
+  );
+
 showPopupCards.addEventListener('click', function() {
-  titleInput.value = "";
-  linkInput.value = "";
+  // titleInput.value = "";
+  // linkInput.value = "";
 
   addFormValidatorCard.resetValidation();
 
-  openPopup(popupCards);
+
+
+  cardPopupWithForm.open();
+  // openPopup(popupCards);
 })
 
 popupProfile.addEventListener('submit', editProfileFormSubmitHandler);
-popupCards.addEventListener('submit', addCardFormListener);
+// popupCards.addEventListener('submit', addCardFormListener);
 
 // renderGrid();
 cardsList.renderItems();

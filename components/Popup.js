@@ -41,6 +41,6 @@ export class Popup {
       if (evt.target.classList.contains('popup__close')) {
         this.close()
       }
-    })
+    }, {once: true})
   }
 }
