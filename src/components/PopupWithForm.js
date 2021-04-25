@@ -20,14 +20,12 @@ export class PopupWithForm extends Popup {
   }
 
   //добавление обработчика сабмита формы
-  setEventListeners() {
-    super.setEventListeners();
-    // this._getInputValues()
+  _setEventListeners() {
+    super._setEventListeners();
 
     this._submitListener = (evt) => {
       evt.preventDefault();
-      // this._getInputValues();
-      // this._handleFormSubmit(this._formValue);
+
       this._handleFormSubmit(this._getInputValues());
     };
 
@@ -38,12 +36,7 @@ export class PopupWithForm extends Popup {
   close() {
     super.close();
 
-    // this._inputList.forEach((input) => {
-    //   input.value = "";
-    // });
-
     this._form.reset();
-
     this._popupElement.removeEventListener('submit', this._submitListener);
   }
 }
