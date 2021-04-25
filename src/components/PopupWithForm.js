@@ -1,16 +1,16 @@
 import {Popup} from './Popup.js';
 
 export class PopupWithForm extends Popup {
-  constructor({handleFormSubmit}, popupSelector) {
-    super(popupSelector);
+  constructor({handleFormSubmit}, popupElement) {
+    super(popupElement);
     this._handleFormSubmit = handleFormSubmit;
-
+    this._form = this._popupElement.querySelector('.popup__container');
   }
 
   //собирает данные всех полей формы
   _getInputValues() {
     this._formValue = [];
-    this._inputList = this._popupSelector.querySelectorAll('.popup__input');
+    this._inputList = this._popupElement.querySelectorAll('.popup__input');
 
     this._inputList.forEach((input) => {
         this._formValue[input.name] = input.value;
@@ -22,25 +22,28 @@ export class PopupWithForm extends Popup {
   //добавление обработчика сабмита формы
   setEventListeners() {
     super.setEventListeners();
-    this._getInputValues()
+    // this._getInputValues()
 
     this._submitListener = (evt) => {
       evt.preventDefault();
-      this._getInputValues();
-      this._handleFormSubmit(this._formValue);
+      // this._getInputValues();
+      // this._handleFormSubmit(this._formValue);
+      this._handleFormSubmit(this._getInputValues());
     };
 
-    this._popupSelector.addEventListener('submit', this._submitListener);
+    this._popupElement.addEventListener('submit', this._submitListener);
   }
 
   //добавление сброса формы
   close() {
     super.close();
 
-    this._inputList.forEach((input) => {
-      input.value = "";
-    });
+    // this._inputList.forEach((input) => {
+    //   input.value = "";
+    // });
 
-    this._popupSelector.removeEventListener('submit', this._submitListener);
+    this._form.reset();
+
+    this._popupElement.removeEventListener('submit', this._submitListener);
   }
 }
