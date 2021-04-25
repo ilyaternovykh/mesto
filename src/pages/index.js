@@ -25,40 +25,52 @@ import {
   validationConfig
 } from '../utils/constants.js'
 
+const createCard = (cardData) => {
+  const card = new Card(cardData, templateElement, handleCardClick);
 
-const addFormValidator = new FormValidator(validationConfig, formElement);
-addFormValidator.enableValidation();
-
-const addFormValidatorCard = new FormValidator(validationConfig, formElementCard);
-addFormValidatorCard.enableValidation();
+  return card.generateCard();
+};
 
 const handleCardClick = (name, link) => {
-  const popup = new PopupWithImage(popupImageContainer, name, link);
-
-  popup.open();
+  popupWithImage.open(name, link);
 }
 
-const cardsList = new Section({
-    items: initialCards,
-    renderer: (cardItem) => {
-      const card = new Card(cardItem, templateElement, handleCardClick);
-      const cardElement = card.generateCard();
-
-      cardsList.addItem(cardElement);
-    },
-  },
-  container
-);
-
+const popupWithImage = new PopupWithImage(popupImageContainer);
+const addFormValidator = new FormValidator(validationConfig, formElement);
+const addFormValidatorCard = new FormValidator(validationConfig, formElementCard);
 const userInfo = new UserInfo(profileTitle, profileSubtitle);
 
+const cardsList = new Section({
+  items: initialCards,
+  renderer: (cardItem) => {
+    const cardElement = createCard(cardItem);
+
+    cardsList.addItem(cardElement);
+  },
+},
+container
+);
+
 const profilePopupWithForm = new PopupWithForm(
-  {handleFormSubmit: (data) => {
+{
+  handleFormSubmit: (data) => {
     userInfo.setUserInfo(data)
     profilePopupWithForm.close();
-  }},
-  popupProfile);
+  }
+},
+popupProfile
+);
 
+const cardPopupWithForm = new PopupWithForm(
+  {
+    handleFormSubmit: (data) => {
+
+      container.prepend(createCard(data));
+      cardPopupWithForm.close();
+    }
+  },
+  popupCards
+);
 
 showPopupProfile.addEventListener('click', function() {
   nameInput.value = userInfo.getUserInfo().name;
@@ -70,23 +82,10 @@ showPopupProfile.addEventListener('click', function() {
 })
 
 showPopupCards.addEventListener('click', function() {
-
   addFormValidatorCard.resetValidation();
-
-  const cardPopupWithForm = new PopupWithForm(
-    {
-      handleFormSubmit: (data) => {
-        const newCard = new Card(data, templateElement, handleCardClick);
-
-        container.prepend(newCard.generateCard());
-        cardPopupWithForm.close();
-      }
-    },
-    popupCards
-  );
-
   cardPopupWithForm.open();
 })
 
-
+addFormValidator.enableValidation();
+addFormValidatorCard.enableValidation();
 cardsList.renderItems();
