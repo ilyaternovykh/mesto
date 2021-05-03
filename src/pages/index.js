@@ -6,9 +6,9 @@ import {Section} from '../components/Section.js';
 import {UserInfo} from '../components/UserInfo.js';
 import {PopupWithImage} from '../components/PopupWithImage.js';
 import {PopupWithForm} from '../components/PopupWithForm.js';
+import {Api} from '../components/Api.js';
 
 import {
-  initialCards,
   showPopupProfile,
   showPopupCards,
   popupProfile,
@@ -40,16 +40,41 @@ const addFormValidator = new FormValidator(validationConfig, formElement);
 const addFormValidatorCard = new FormValidator(validationConfig, formElementCard);
 const userInfo = new UserInfo(profileTitle, profileSubtitle);
 
-const cardsList = new Section({
-  items: initialCards,
-  renderer: (cardItem) => {
-    const cardElement = createCard(cardItem);
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-23',
+  headers: {
+    authorization: '62447ab3-7516-4840-91dc-81dbab840843',
+    'Content-Type': 'application/json'
+  }
+});
 
-    cardsList.addItem(cardElement);
+const cards = api.getInitialCards();
+cards.then((data) => {
+  const cardsList = new Section({
+    items: data,
+    renderer: (cardItem) => {
+      const cardElement = createCard(cardItem);
+
+      cardsList.addItem(cardElement);
+    },
   },
-},
-container
-);
+  container
+  );
+  cardsList.renderItems();
+}).catch((err) => {
+  console.log(err);
+});
+
+// const cardsList = new Section({
+//   items: initialCards,
+//   renderer: (cardItem) => {
+//     const cardElement = createCard(cardItem);
+
+//     cardsList.addItem(cardElement);
+//   },
+// },
+// container
+// );
 
 const profilePopupWithForm = new PopupWithForm(
 {
@@ -88,4 +113,5 @@ showPopupCards.addEventListener('click', function() {
 
 addFormValidator.enableValidation();
 addFormValidatorCard.enableValidation();
-cardsList.renderItems();
+
+// cardsList.renderItems();
