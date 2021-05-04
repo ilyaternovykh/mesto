@@ -15,6 +15,7 @@ import {
   popupCards,
   profileTitle,
   profileSubtitle,
+  profileAvatar,
   formElement,
   formElementCard,
   nameInput,
@@ -35,11 +36,6 @@ const handleCardClick = (name, link) => {
   popupWithImage.open(name, link);
 }
 
-const popupWithImage = new PopupWithImage(popupImageContainer);
-const addFormValidator = new FormValidator(validationConfig, formElement);
-const addFormValidatorCard = new FormValidator(validationConfig, formElementCard);
-const userInfo = new UserInfo(profileTitle, profileSubtitle);
-
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-23',
   headers: {
@@ -48,8 +44,24 @@ const api = new Api({
   }
 });
 
-const cards = api.getInitialCards();
-cards.then((data) => {
+const popupWithImage = new PopupWithImage(popupImageContainer);
+const addFormValidator = new FormValidator(validationConfig, formElement);
+const addFormValidatorCard = new FormValidator(validationConfig, formElementCard);
+
+const userInfo = new UserInfo(profileTitle, profileSubtitle, api);
+
+const userFromApi = api.getUserInfo();
+userFromApi.then((data) => {
+  profileTitle.textContent = data.name;
+  profileSubtitle.textContent = data.about;
+  profileAvatar.src = data.avatar;
+}).catch((err) => {
+  console.log(err);
+});
+
+
+const cardsFromApi = api.getInitialCards();
+cardsFromApi.then((data) => {
   const cardsList = new Section({
     items: data,
     renderer: (cardItem) => {
@@ -76,15 +88,25 @@ cards.then((data) => {
 // container
 // );
 
+// const profilePopupWithForm = new PopupWithForm(
+// {
+//   handleFormSubmit: (data) => {
+//     userInfo.setUserInfo(data)
+//     profilePopupWithForm.close();
+//   }
+// },
+// popupProfile
+// );
+
 const profilePopupWithForm = new PopupWithForm(
-{
-  handleFormSubmit: (data) => {
-    userInfo.setUserInfo(data)
-    profilePopupWithForm.close();
-  }
-},
-popupProfile
-);
+  {
+    handleFormSubmit: (data) => {
+      userInfo.saveUserInfo(data)
+      profilePopupWithForm.close();
+    }
+  },
+  popupProfile
+  );
 
 const cardPopupWithForm = new PopupWithForm(
   {

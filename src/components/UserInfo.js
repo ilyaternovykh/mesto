@@ -1,7 +1,8 @@
 export class UserInfo {
-  constructor(userInfoName, userInfoAbout) {
+  constructor(userInfoName, userInfoAbout, api) {
     this._name = userInfoName;
     this._about = userInfoAbout;
+    this._api = api;
   }
 
   getUserInfo() {
@@ -13,8 +14,15 @@ export class UserInfo {
     return this._user;
   }
 
-  setUserInfo(data) {
-    this._name.textContent = data.profile__name;
-    this._about.textContent = data.profile__about;
+  saveUserInfo = (data) => {
+    this._api
+      .editUserInfo({name: data.profile__name, about: data.profile__about})
+      .then((userData) => this._setUserInfo(userData))
+      .catch((err) => console.log(err));
+  }
+
+  _setUserInfo(data) {
+    this._name.textContent = data.name;
+    this._about.textContent = data.about;
   }
 }
