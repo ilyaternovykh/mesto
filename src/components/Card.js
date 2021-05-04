@@ -1,9 +1,10 @@
 export class Card {
-  constructor(data, cardTemplateSelector, handleCardClick) {
+  constructor(data, cardTemplateSelector, handleCardClick, api) {
     this._name = data.name;
     this._link = data.link;
     this._cardTemplateSelector = cardTemplateSelector;
     this._handleCardClick = handleCardClick;
+    this._api = api;
   }
 
   _getTemplate() {

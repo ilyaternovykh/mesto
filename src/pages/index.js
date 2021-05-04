@@ -27,7 +27,7 @@ import {
 } from '../utils/constants.js'
 
 const createCard = (cardData) => {
-  const card = new Card(cardData, templateElement, handleCardClick);
+  const card = new Card(cardData, templateElement, handleCardClick, api);
 
   return card.generateCard();
 };
@@ -108,12 +108,27 @@ const profilePopupWithForm = new PopupWithForm(
   popupProfile
   );
 
+// const cardPopupWithForm = new PopupWithForm(
+//   {
+//     handleFormSubmit: (data) => {
+
+//       container.prepend(createCard(data));
+//       cardPopupWithForm.close();
+//     }
+//   },
+//   popupCards
+// );
+
 const cardPopupWithForm = new PopupWithForm(
   {
     handleFormSubmit: (data) => {
-
-      container.prepend(createCard(data));
-      cardPopupWithForm.close();
+      const cardForApi = api.addNewCard({name: data.name, link: data.link});
+      cardForApi.then((cardData) => {
+        container.prepend(createCard(cardData));
+        cardPopupWithForm.close();
+      }).catch((err) => {
+        console.log(err);
+      });
     }
   },
   popupCards
