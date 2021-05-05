@@ -5,6 +5,7 @@ export class Card {
     this._cardTemplateSelector = cardTemplateSelector;
     this._handleCardClick = handleCardClick;
     this._api = api;
+    this._like = data.likes;
   }
 
   _getTemplate() {
@@ -21,12 +22,14 @@ export class Card {
     this._likeButton = this._element.querySelector('.cards__like');
     this._trashButton = this._element.querySelector('.cards__trash');
     this._cardImage = this._element.querySelector('.cards__image');
+    this._likeCount = this._element.querySelector('.cards__like-count');
 
     this._setEventListeners();
 
     this._element.querySelector('.cards__title').textContent = this._name;
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
+    this._likeCount.textContent = this._like.length;
 
     return this._element;
   }
