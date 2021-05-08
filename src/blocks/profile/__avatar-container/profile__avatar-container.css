@@ -32,22 +32,16 @@
 }
 
 .profile__avatar-container:hover::after {
-  /* background: rgba(0, 0, 0, 0.8); */
   content: "";
   position: absolute;
   top: 39%;
   left: 39%;
-  /* opacity: 0.2; */
   background-image: url(../../../images/profile-avatar-edit.svg);
-  /* width: 26px;
-  height: 26px; */
   width: 26px;
   height: 26px;
   background-repeat: no-repeat;
   background-position: center center;
   cursor: pointer;
-  /* background-size: 26px 26px; */
-  /* z-index: 1; */
 }
 
 @media screen and (min-width: 768px) {
