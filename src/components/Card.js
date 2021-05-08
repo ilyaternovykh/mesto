@@ -1,11 +1,15 @@
 export class Card {
-  constructor(data, cardTemplateSelector, handleCardClick, api) {
+  constructor({ data, handleDeleteIconClick }, userId, cardTemplateSelector, handleCardClick, api) {
     this._name = data.name;
     this._link = data.link;
     this._cardTemplateSelector = cardTemplateSelector;
     this._handleCardClick = handleCardClick;
     this._api = api;
     this._like = data.likes;
+    this._handleDeleteIconClick = handleDeleteIconClick;
+    this._userId = userId;
+    this._ownerId = data.owner._id;
+    this._cardId = data._id;
   }
 
   _getTemplate() {
@@ -31,6 +35,10 @@ export class Card {
     this._cardImage.alt = this._name;
     this._likeCount.textContent = this._like.length;
 
+    if(this._userId === this._ownerId) {
+      this._trashButton.classList.add('cards__trash_visible');
+    }
+
     return this._element;
   }
 
@@ -39,7 +47,8 @@ export class Card {
       this._handleLikeClick();
     });
     this._trashButton.addEventListener('click', () => {
-      this._deleteCardClick();
+      //this._deleteCardClick();
+      this._handleDeleteIconClick(this._cardId);
     });
     this._cardImage.addEventListener('click', () => {
       this._handleCardClick(this._name, this._link);
@@ -51,6 +60,10 @@ export class Card {
   }
 
   _deleteCardClick() {
+    this._trashButton.closest('.cards__item').remove();
+  }
+
+  deleteCard() {
     this._trashButton.closest('.cards__item').remove();
   }
 }

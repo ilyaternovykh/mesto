@@ -32,6 +32,10 @@ export class Api {
     });
   }
 
+  getAllData() {
+    return Promise.all([this.getUserInfo(), this.getInitialCards()]);
+  }
+
   editUserInfo(userData) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
@@ -52,6 +56,20 @@ export class Api {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify(cardData)
+    })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+
+      return Promise.reject(`Ошибка: ${res.status}`);
+    });
+  }
+
+  removeCard(id) {
+    return fetch(`${this._baseUrl}/cards/${id}`, {
+      method: 'DELETE',
+      headers: this._headers
     })
     .then((res) => {
       if (res.ok) {

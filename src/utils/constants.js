@@ -2,6 +2,7 @@ export const showPopupProfile = document.querySelector('.profile__edit-button');
 export const showPopupCards = document.querySelector('.profile__add-button');
 export const popupProfile = document.querySelector('.popup_type_profile');
 export const popupCards = document.querySelector('.popup_type_cards');
+export const popupCardsDelete = document.querySelector('.popup_type_cards-delete');
 export const profileTitle = document.querySelector('.profile__title');
 export const profileSubtitle = document.querySelector('.profile__subtitle');
 export const profileAvatar = document.querySelector('.profile__avatar');
