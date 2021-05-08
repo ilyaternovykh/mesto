@@ -12,7 +12,9 @@ import {PopupWithSubmit} from '../components/PopupWithSubmit.js';
 import {
   showPopupProfile,
   showPopupCards,
+  showPopupAvatar,
   popupProfile,
+  popupAvatar,
   popupCards,
   popupCardsDelete,
   profileTitle,
@@ -20,12 +22,13 @@ import {
   profileAvatar,
   formElement,
   formElementCard,
+  formElementAvatar,
   nameInput,
   jobInput,
   popupImageContainer,
   container,
   templateElement,
-  validationConfig
+  validationConfig,
 } from '../utils/constants.js'
 
 
@@ -53,7 +56,6 @@ api.getAllData()
     const card = new Card({
       data: cardData,
       handleDeleteIconClick: (id) => {
-        // const cardId = id;
         cardDeletePopup.setSubmitAction((evt) => {
           evt.preventDefault();
           api.removeCard(id).then(() => {
@@ -91,9 +93,11 @@ api.getAllData()
   const cardPopupWithForm = new PopupWithForm(
     {
       handleFormSubmit: (data) => {
+        dataLoading(true, popupCards);
         const cardForApi = api.addNewCard({name: data.name, link: data.link});
         cardForApi.then((cardData) => {
           container.prepend(createCard(cardData));
+          dataLoading(false, popupCards);
           cardPopupWithForm.close();
         }).catch((err) => {
           console.log(err);
@@ -103,12 +107,34 @@ api.getAllData()
     popupCards
   );
 
+  const avatarPopupWithForm = new PopupWithForm(
+    {
+      handleFormSubmit: (data) => {
+        dataLoading(true, popupAvatar);
+        const avatarForApi = api.editUserAvatar({avatar: data.link});
+        avatarForApi.then((avatarData) => {
+          profileAvatar.src = avatarData.avatar;
+          dataLoading(false, popupAvatar);
+          avatarPopupWithForm.close();
+        }).catch((err) => {
+          console.log(err);
+        });
+      }
+    },
+    popupAvatar
+    );
+
 
   cardsList.renderItems();
 
   showPopupCards.addEventListener('click', function() {
     addFormValidatorCard.resetValidation();
     cardPopupWithForm.open();
+  })
+
+  showPopupAvatar.addEventListener('click', function() {
+    addFormValidatorAvatar.resetValidation();
+    avatarPopupWithForm.open();
   })
 })
 .catch(err => console.error(err))
@@ -139,6 +165,19 @@ api.getAllData()
 //   cardDeletePopup.open();
 // };
 
+function dataLoading(isLoading, popupElement) {
+  const popupSubmitButtonDefault = popupElement.querySelector('.popup__submit_type_default');
+  const popupSubmitButtonLoading = popupElement.querySelector('.popup__submit_type_loading');
+
+  if (isLoading) {
+    popupSubmitButtonDefault.classList.add('popup__submit_hidden');
+    popupSubmitButtonLoading.classList.remove('popup__submit_hidden');
+  } else {
+    popupSubmitButtonDefault.classList.remove('popup__submit_hidden');
+    popupSubmitButtonLoading.classList.add('popup__submit_hidden');
+  }
+}
+
 const handleCardClick = (name, link) => {
   popupWithImage.open(name, link);
 }
@@ -148,6 +187,7 @@ const handleCardClick = (name, link) => {
 const popupWithImage = new PopupWithImage(popupImageContainer);
 const addFormValidator = new FormValidator(validationConfig, formElement);
 const addFormValidatorCard = new FormValidator(validationConfig, formElementCard);
+const addFormValidatorAvatar = new FormValidator(validationConfig, formElementAvatar);
 
 const userInfo = new UserInfo(profileTitle, profileSubtitle, api);
 
@@ -205,12 +245,16 @@ const userInfo = new UserInfo(profileTitle, profileSubtitle, api);
 const profilePopupWithForm = new PopupWithForm(
   {
     handleFormSubmit: (data) => {
-      userInfo.saveUserInfo(data)
+      dataLoading(true, popupProfile);
+      userInfo.saveUserInfo(data);
+      dataLoading(false, popupProfile);
       profilePopupWithForm.close();
     }
   },
   popupProfile
   );
+
+
 
 // const cardPopupWithForm = new PopupWithForm(
 //   {
@@ -256,5 +300,6 @@ showPopupProfile.addEventListener('click', function() {
 
 addFormValidator.enableValidation();
 addFormValidatorCard.enableValidation();
+addFormValidatorAvatar.enableValidation();
 
 // cardsList.renderItems();
