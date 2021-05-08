@@ -53,25 +53,26 @@ api.getAllData()
     const card = new Card({
       data: cardData,
       handleDeleteIconClick: (id) => {
-        const cardId = id;
+        // const cardId = id;
         cardDeletePopup.setSubmitAction((evt) => {
           evt.preventDefault();
-          api.removeCard(cardId).then(() => {
+          api.removeCard(id).then(() => {
                 card.deleteCard();
                 cardDeletePopup.close();
               }).catch(err => console.error(err))
         })
         cardDeletePopup.open();
+      },
+      handleLikeClick: (id) => {
+        api.likeCard(id).then((cardDataLike) => {
+          card.setLikeCount(cardDataLike);
+        })
+      },
+      handleDislikeLikeClick: (id) => {
+        api.dislikeLikeCard(id).then((cardDataLike) => {
+          card.setLikeCount(cardDataLike);
+        })
       }
-      // handleDeleteIconClick: (id) => {
-      //   api.removeCard(id).then(() => {
-      //     card.deleteCard()
-      //   }).catch(err => console.error(err))
-
-
-      //   // const cardDeletePopup = new PopupWithSubmit(popupCardsDelete);
-      //   // cardDeletePopup.open();
-      // }
     }, userId, templateElement, handleCardClick);
 
     return card.generateCard();
