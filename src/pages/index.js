@@ -40,16 +40,22 @@ const api = new Api({
   }
 });
 
-function dataLoading(isLoading, popupElement) {
-  const popupSubmitButtonDefault = popupElement.querySelector('.popup__submit_type_default');
-  const popupSubmitButtonLoading = popupElement.querySelector('.popup__submit_type_loading');
+function renderLoading(isLoading, popupElement, buttonText) {
+  // const popupSubmitButtonDefault = popupElement.querySelector('.popup__submit_type_default');
+  // const popupSubmitButtonLoading = popupElement.querySelector('.popup__submit_type_loading');
+
+  const popupSubmitButton = popupElement.querySelector('.popup__submit');
 
   if (isLoading) {
-    popupSubmitButtonDefault.classList.add('popup__submit_hidden');
-    popupSubmitButtonLoading.classList.remove('popup__submit_hidden');
+    // popupSubmitButtonDefault.classList.add('popup__submit_hidden');
+    // popupSubmitButtonLoading.classList.remove('popup__submit_hidden');
+    popupSubmitButton.textContent = 'Сохранение...';
+
   } else {
-    popupSubmitButtonDefault.classList.remove('popup__submit_hidden');
-    popupSubmitButtonLoading.classList.add('popup__submit_hidden');
+    // popupSubmitButtonDefault.classList.remove('popup__submit_hidden');
+    // popupSubmitButtonLoading.classList.add('popup__submit_hidden');
+
+    popupSubmitButton.textContent = buttonText;
   }
 }
 
@@ -66,9 +72,11 @@ const userInfo = new UserInfo(profileTitle, profileSubtitle, api);
 const profilePopupWithForm = new PopupWithForm(
   {
     handleFormSubmit: (data) => {
-      dataLoading(true, popupProfile);
+      const buttonText = popupProfile.querySelector('.popup__submit').textContent;
+
+      renderLoading(true, popupProfile, buttonText);
       userInfo.saveUserInfo(data);
-      dataLoading(false, popupProfile);
+      renderLoading(false, popupProfile, buttonText);
       profilePopupWithForm.close();
     }
   },
@@ -93,8 +101,12 @@ api.getAllData()
       handleDeleteIconClick: (id) => {
         cardDeletePopup.setSubmitAction((evt) => {
           evt.preventDefault();
+          const buttonText = popupCardsDelete.querySelector('.popup__submit').textContent;
+
+          renderLoading(true, popupCardsDelete, buttonText);
           api.removeCard(id).then(() => {
                 card.deleteCard();
+                renderLoading(false, popupCardsDelete, buttonText);
                 cardDeletePopup.close();
               }).catch(err => console.error(err))
         })
@@ -128,11 +140,14 @@ api.getAllData()
   const cardPopupWithForm = new PopupWithForm(
     {
       handleFormSubmit: (data) => {
-        dataLoading(true, popupCards);
+        const buttonText = popupCards.querySelector('.popup__submit').textContent;
         const cardForApi = api.addNewCard({name: data.name, link: data.link});
+
+        renderLoading(true, popupCards, buttonText);
+
         cardForApi.then((cardData) => {
           container.prepend(createCard(cardData));
-          dataLoading(false, popupCards);
+          renderLoading(false, popupCards, buttonText);
           cardPopupWithForm.close();
         }).catch((err) => {
           console.log(err);
@@ -145,11 +160,13 @@ api.getAllData()
   const avatarPopupWithForm = new PopupWithForm(
     {
       handleFormSubmit: (data) => {
-        dataLoading(true, popupAvatar);
+        const buttonText = popupAvatar.querySelector('.popup__submit').textContent;
         const avatarForApi = api.editUserAvatar({avatar: data.link});
+
+        renderLoading(true, popupAvatar, buttonText);
         avatarForApi.then((avatarData) => {
           profileAvatar.src = avatarData.avatar;
-          dataLoading(false, popupAvatar);
+          renderLoading(false, popupAvatar, buttonText);
           avatarPopupWithForm.close();
         }).catch((err) => {
           console.log(err);
