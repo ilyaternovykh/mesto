@@ -174,7 +174,8 @@ api.getAllData()
         renderLoading(true, popupCards, buttonText);
 
         cardForApi.then((cardData) => {
-          container.prepend(createCard(cardData));
+          // container.prepend(createCard(cardData));
+          cardsList.prependItem(createCard(cardData));
           renderLoading(false, popupCards, buttonText);
           cardPopupWithForm.close();
         }).catch((err) => {
