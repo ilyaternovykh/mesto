@@ -1,8 +1,9 @@
 export class UserInfo {
-  constructor(userInfoName, userInfoAbout, api) {
+  constructor(userInfoName, userInfoAbout, userAvatar) {
     this._name = userInfoName;
     this._about = userInfoAbout;
-    this._api = api;
+    this._avatar = userAvatar;
+    // this._api = api;
   }
 
   getUserInfo() {
@@ -14,15 +15,16 @@ export class UserInfo {
     return this._user;
   }
 
-  saveUserInfo = (data) => {
-    this._api
-      .editUserInfo({name: data.profile__name, about: data.profile__about})
-      .then((userData) => this._setUserInfo(userData))
-      .catch((err) => console.log(err));
-  }
+  // saveUserInfo = (data) => {
+  //   this._api
+  //     .editUserInfo({name: data.profile__name, about: data.profile__about})
+  //     .then((userData) => this.setUserInfo(userData))
+  //     .catch((err) => console.log(err));
+  // }
 
-  _setUserInfo(data) {
+  setUserInfo(data) {
     this._name.textContent = data.name;
     this._about.textContent = data.about;
+    this._avatar.src = data.avatar;
   }
 }

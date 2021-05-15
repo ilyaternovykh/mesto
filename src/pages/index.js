@@ -67,21 +67,22 @@ const popupWithImage = new PopupWithImage(popupImageContainer);
 const addFormValidator = new FormValidator(validationConfig, formElement);
 const addFormValidatorCard = new FormValidator(validationConfig, formElementCard);
 const addFormValidatorAvatar = new FormValidator(validationConfig, formElementAvatar);
-const userInfo = new UserInfo(profileTitle, profileSubtitle, api);
+// const userInfo = new UserInfo(profileTitle, profileSubtitle, api);
+const userInfo = new UserInfo(profileTitle, profileSubtitle, profileAvatar);
 
-const profilePopupWithForm = new PopupWithForm(
-  {
-    handleFormSubmit: (data) => {
-      const buttonText = popupProfile.querySelector('.popup__submit').textContent;
+// const profilePopupWithForm = new PopupWithForm(
+//   {
+//     handleFormSubmit: (data) => {
+//       const buttonText = popupProfile.querySelector('.popup__submit').textContent;
 
-      renderLoading(true, popupProfile, buttonText);
-      userInfo.saveUserInfo(data);
-      renderLoading(false, popupProfile, buttonText);
-      profilePopupWithForm.close();
-    }
-  },
-  popupProfile
-);
+//       renderLoading(true, popupProfile, buttonText);
+//       userInfo.saveUserInfo(data);
+//       renderLoading(false, popupProfile, buttonText);
+//       profilePopupWithForm.close();
+//     }
+//   },
+//   popupProfile
+// );
 
 api.getAllData()
 .then(promises => {
@@ -89,9 +90,36 @@ api.getAllData()
 
   //Сохранение информации о пользователе с сервера
   const userId = userInfoData._id;
-  profileTitle.textContent = userInfoData.name;
-  profileSubtitle.textContent = userInfoData.about;
-  profileAvatar.src = userInfoData.avatar;
+  // profileTitle.textContent = userInfoData.name;
+  // profileSubtitle.textContent = userInfoData.about;
+  // profileAvatar.src = userInfoData.avatar;
+
+  userInfo.setUserInfo(userInfoData);
+
+
+
+  const profilePopupWithForm = new PopupWithForm(
+    {
+      handleFormSubmit: (data) => {
+        const buttonText = popupProfile.querySelector('.popup__submit').textContent;
+
+        renderLoading(true, popupProfile, buttonText);
+        // userInfo.saveUserInfo(data);
+
+        api.editUserInfo({name: data.profile__name, about: data.profile__about})
+        .then((userData) => {
+          userInfo.setUserInfo(userData)
+          renderLoading(false, popupProfile, buttonText);
+          profilePopupWithForm.close();
+        })
+        .catch((err) => console.log(err));
+
+        // renderLoading(false, popupProfile, buttonText);
+        // profilePopupWithForm.close();
+      }
+    },
+    popupProfile
+  );
 
   const cardDeletePopup = new PopupWithSubmit(popupCardsDelete);
 
@@ -115,12 +143,12 @@ api.getAllData()
       handleLikeClick: (id) => {
         api.likeCard(id).then((cardDataLike) => {
           card.setLikeCount(cardDataLike);
-        })
+        }).catch(err => console.error(err))
       },
       handleDislikeLikeClick: (id) => {
         api.dislikeLikeCard(id).then((cardDataLike) => {
           card.setLikeCount(cardDataLike);
-        })
+        }).catch(err => console.error(err))
       }
     }, userId, templateElement, handleCardClick);
 
@@ -165,7 +193,8 @@ api.getAllData()
 
         renderLoading(true, popupAvatar, buttonText);
         avatarForApi.then((avatarData) => {
-          profileAvatar.src = avatarData.avatar;
+          // profileAvatar.src = avatarData.avatar;
+          userInfo.setUserInfo(avatarData);
           renderLoading(false, popupAvatar, buttonText);
           avatarPopupWithForm.close();
         }).catch((err) => {
@@ -188,17 +217,17 @@ api.getAllData()
     addFormValidatorAvatar.resetValidation();
     avatarPopupWithForm.open();
   })
+
+  showPopupProfile.addEventListener('click', function() {
+    nameInput.value = userInfo.getUserInfo().name;
+    jobInput.value = userInfo.getUserInfo().about;
+
+    addFormValidator.resetValidation();
+
+    profilePopupWithForm.open();
+  })
 })
 .catch(err => console.error(err))
-
-showPopupProfile.addEventListener('click', function() {
-  nameInput.value = userInfo.getUserInfo().name;
-  jobInput.value = userInfo.getUserInfo().about;
-
-  addFormValidator.resetValidation();
-
-  profilePopupWithForm.open();
-})
 
 
 addFormValidator.enableValidation();
