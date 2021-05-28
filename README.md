@@ -8,5 +8,5 @@
 
 **Figma**
 
-* [Ссылка на сайт](https://ilyaternovykh.github.io/mesto/index.html)
+* [Ссылка на сайт](https://ilyaternovykh.github.io/mesto)
 
